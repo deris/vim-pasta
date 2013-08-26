@@ -7,7 +7,7 @@ if exists("g:loaded_pasta") || &cp || v:version < 700
 endif
 let g:loaded_pasta = 1
 
-function! s:NormalPasta(p, o)
+function! s:NormalPasta(p)
   execute 'normal! ' . v:count1 . '"' . v:register . a:p
 
   if getregtype() isnot# 'V'
@@ -61,8 +61,8 @@ if !exists("g:pasta_paste_after_mapping")
   let g:pasta_paste_after_mapping = 'p'
 endif
 
-nnoremap <silent> <Plug>BeforePasta :<C-U>call <SID>NormalPasta('P', 'O')<CR>
-nnoremap <silent> <Plug>AfterPasta :<C-U>call <SID>NormalPasta('p', 'o')<CR>
+nnoremap <silent> <Plug>BeforePasta :<C-U>call <SID>NormalPasta('P')<CR>
+nnoremap <silent> <Plug>AfterPasta :<C-U>call <SID>NormalPasta('p')<CR>
 xnoremap <silent> <Plug>VisualPasta :<C-U>call <SID>VisualPasta()<CR>
 
 augroup vim_pasta
