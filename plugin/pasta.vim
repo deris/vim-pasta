@@ -8,35 +8,27 @@ endif
 let g:loaded_pasta = 1
 
 function! s:NormalPasta(p, o)
-  if (getregtype() ==# "V")
-    exe "normal! " . a:o . "\<space>\<bs>\<esc>" . v:count1 . '"' . v:register . ']p'
-    " Save the `[ and `] marks (point to the last modification)
-    let first = getpos("'[")
-    let last  = getpos("']")
-    normal! k"_dd
-    " Compensate the line we have just deleted
-    let first[1] -= 1
-    let last[1]  -= 1
-    call setpos("'[", first)
-    call setpos("']", last)
-  else
-    exe "normal! " . v:count1 . '"' . v:register . a:p
+  execute 'normal! ' . v:count1 . '"' . v:register . a:p
+
+  if getregtype() isnot# 'V'
+    return
   endif
+
+  normal! '[V']=
 endfunction
 
 function! s:VisualPasta()
-  if (visualmode() ==# "V")
-    if (getregtype() ==# "V")
-      exe "normal! gv\"_c\<space>\<bs>\<esc>" . v:count1 . '"' . v:register . ']pk"_dd'
-    else
-      exe "normal! gv\"_c\<space>\<bs>\<esc>" . v:count1 . '"' . v:register . ']p'
-    endif
-  else
-    " workaround strange Vim behavior (""p is no-op in visual mode)
-    let reg = v:register == '"' ? '' : '"' . v:register
+  " workaround strange Vim behavior (""p is no-op in visual mode)
+  let reg = v:register == '"' ? '' : '"' . v:register
+  let regtype = getregtype()
+  exe "normal! gv" . v:count1 . reg . g:pasta_paste_after_mapping
 
-    exe "normal! gv" . v:count1 . reg . "p"
+  if visualmode() isnot# 'V' &&
+    \regtype isnot# 'V'
+    return
   endif
+
+  normal! '[V']=
 endfunction
 
 function! s:SetupPasta()
