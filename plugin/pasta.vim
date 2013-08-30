@@ -48,18 +48,10 @@ function! s:SetupPasta()
   exe "xmap <buffer> " . g:pasta_paste_after_mapping . " <Plug>VisualPasta"
 endfunction
 
-if !exists("g:pasta_disabled_filetypes")
-  let g:pasta_disabled_filetypes = ["python", "coffee", "markdown",
-        \"yaml", "slim", "nerdtree", "netrw", "startify", "ctrlp"]
-endif
-
-if !exists("g:pasta_paste_before_mapping")
-  let g:pasta_paste_before_mapping = 'P'
-endif
-
-if !exists("g:pasta_paste_after_mapping")
-  let g:pasta_paste_after_mapping = 'p'
-endif
+let g:pasta_disabled_filetypes   = get(g:, 'pasta_disabled_filetypes', ["python", "coffee", "markdown",
+  \ "yaml", "slim", "nerdtree", "netrw", "startify", "ctrlp"])
+let g:pasta_paste_before_mapping = get(g:, 'pasta_paste_before_mapping', 'P')
+let g:pasta_paste_after_mapping  = get(g:, 'pasta_paste_after_mapping', 'p')
 
 nnoremap <silent> <Plug>BeforePasta :<C-U>call <SID>NormalPasta('P')<CR>
 nnoremap <silent> <Plug>AfterPasta :<C-U>call <SID>NormalPasta('p')<CR>
