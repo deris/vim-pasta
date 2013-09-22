@@ -41,11 +41,19 @@ function! s:SetupPasta()
     return
   endif
 
-  exe "nmap <buffer> " . g:pasta_paste_before_mapping . " <Plug>BeforePasta"
-  exe "xmap <buffer> " . g:pasta_paste_before_mapping . " <Plug>VisualPasta"
+  if get(g:, 'pasta_no_default_key_mappings', 0)
+    return
+  endif
 
-  exe "nmap <buffer> " . g:pasta_paste_after_mapping . " <Plug>AfterPasta"
-  exe "xmap <buffer> " . g:pasta_paste_after_mapping . " <Plug>VisualPasta"
+  if !get(g:, 'pasta_no_default_normal_key_mappings', 0)
+    exe "nmap <buffer> " . g:pasta_paste_before_mapping . " <Plug>BeforePasta"
+    exe "nmap <buffer> " . g:pasta_paste_after_mapping . " <Plug>AfterPasta"
+  endif
+
+  if !get(g:, 'pasta_no_default_visual_key_mappings', 0)
+    exe "xmap <buffer> " . g:pasta_paste_before_mapping . " <Plug>VisualPasta"
+    exe "xmap <buffer> " . g:pasta_paste_after_mapping . " <Plug>VisualPasta"
+  endif
 endfunction
 
 let g:pasta_disabled_filetypes   = get(g:, 'pasta_disabled_filetypes', ["python", "coffee", "markdown",
