@@ -7,7 +7,8 @@ if exists("g:loaded_pasta") || &cp || v:version < 700
 endif
 let g:loaded_pasta = 1
 
-let g:pasta_disabled_filetypes   = get(g:, 'pasta_disabled_filetypes', ["python", "coffee", "markdown", "yaml", "slim"])
+let g:pasta_disabled_filetypes   = get(g:, 'pasta_disabled_filetypes', ["python", "coffee", "markdown",
+  \ "yaml", "slim", "nerdtree", "netrw", "startify", "ctrlp"])
 let g:pasta_paste_before_mapping = get(g:, 'pasta_paste_before_mapping', 'P')
 let g:pasta_paste_after_mapping  = get(g:, 'pasta_paste_after_mapping', 'p')
 
